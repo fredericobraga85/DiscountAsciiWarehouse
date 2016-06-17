@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Discount Ascii Warehouse</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="search">search</string>
+    <string name="buy">BUY</string>
+    <string name="onlyinstock">Only show items in-Stock</string>
+    <string name="no_results_found">No results found</string>
+    <string name="error_on_loading">An error occurred while loading more results.</string>
+    <string name="search_for_ascii">search for ascii</string>
+    <string name="onlyOneMore">(Only 1 more in stock!)</string>
+    <string name="buyNow">BUY NOW!</string>
+    <string name="buyQuestion">Buy now?</string>
+    <string name="yes">YES</string>
+    <string name="no">NO</string>
+    <string name="ascii_purchase_with_success">Ascii purchased with success!</string>
+    <string name="ok">OK</string>
+</resources>
