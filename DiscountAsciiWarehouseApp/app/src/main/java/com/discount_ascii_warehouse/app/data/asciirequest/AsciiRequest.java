@@ -4,6 +4,8 @@ import com.orm.SugarRecord;
 import com.orm.dsl.Column;
 import com.orm.dsl.Table;
 
+import java.util.Date;
+
 /**
  * Created by mariobraga on 6/16/16.
  */
@@ -11,6 +13,15 @@ import com.orm.dsl.Table;
 public class AsciiRequest extends SugarRecord  {
 
     public AsciiRequest(){}
+
+    public AsciiRequest(int limit, int skip, String query , boolean isOnlyInStock)
+    {
+        setTimestamp(new Date().getTime());
+        setLimit(limit);
+        setSkip(skip);
+        setQuery(query);
+        setOnlyInStock(isOnlyInStock);
+    }
 
     private long id;
     private long timestamp;
@@ -77,5 +88,7 @@ public class AsciiRequest extends SugarRecord  {
     public void setResponse(String response) {
         this.response = response;
     }
+
+
 
 }

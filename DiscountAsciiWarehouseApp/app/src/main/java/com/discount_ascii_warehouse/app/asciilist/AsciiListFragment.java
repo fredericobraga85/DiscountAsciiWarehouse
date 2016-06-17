@@ -64,14 +64,12 @@ public class AsciiListFragment extends Fragment implements AsciiListContract.Vie
     }
 
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setRetainInstance(true);
         setHasOptionsMenu(true);
-
 
     }
 
@@ -86,8 +84,6 @@ public class AsciiListFragment extends Fragment implements AsciiListContract.Vie
         tvMsg = (TextView) view.findViewById(R.id.tvMsg);
         recyclerView.addOnScrollListener(onRecylerViewScrolled());
 
-
-
         return view;
     }
 
@@ -99,7 +95,7 @@ public class AsciiListFragment extends Fragment implements AsciiListContract.Vie
         calculateLimit();
         skip = 0;
 
-        asciiListPresenter.onClickSearchAscii(getAsciiRequest(limit, skip, query, isOnlyInStock));
+        asciiListPresenter.onClickSearchAscii(new AsciiRequest(limit, skip, query, isOnlyInStock));
 
     }
 
@@ -111,17 +107,9 @@ public class AsciiListFragment extends Fragment implements AsciiListContract.Vie
 
         this.menu = menu;
         inflater.inflate(R.menu.menu_ascii_list, menu);
-        configSearchBar(menu);
-        configOnlyStockIcon();
+        initSearchBar(menu);
+        initOnlyStockIcon();
 
-    }
-
-    private void configOnlyStockIcon() {
-
-        if(isOnlyInStock)
-        {
-            showOnlyStockIconActivated();
-        }
     }
 
     @Override
@@ -131,13 +119,13 @@ public class AsciiListFragment extends Fragment implements AsciiListContract.Vie
         {
             skip = 0;
             isOnlyInStock = !isOnlyInStock;
-            asciiListPresenter.onClickOnlyInStock(getAsciiRequest(limit,skip,query,isOnlyInStock));
+            asciiListPresenter.onClickOnlyInStock(new AsciiRequest(limit,skip,query,isOnlyInStock));
         }
 
         return true;
     }
 
-    private void configSearchBar(Menu menu) {
+    private void initSearchBar(Menu menu) {
 
         SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
         MenuItem searchItem = menu.findItem(R.id.searchBar);
@@ -170,84 +158,15 @@ public class AsciiListFragment extends Fragment implements AsciiListContract.Vie
 
     }
 
-    private RecyclerView.OnScrollListener onRecylerViewScrolled() {
+    private void initOnlyStockIcon() {
 
-        return new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-
-            }
-
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-
-                View view = (View) recyclerView.getChildAt(recyclerView.getChildCount() - 1);
-                int diff = (view.getBottom() - (recyclerView.getHeight() + recyclerView.getScrollY()));
-
-
-                if (diff == 0) {
-
-                    skip = limit + skip;
-
-                    asciiListPresenter.onRefreshAsciiList(getAsciiRequest(limit, skip, query, isOnlyInStock));
-                }
-            }
-        };
+        if(isOnlyInStock)
+        {
+            showOnlyStockIconActivated();
+        }
     }
 
-
-
-
-
-    public AsciiListContract.UserActionsListener getAsciiListPresenter() {
-        return asciiListPresenter;
-    }
-
-    public void setAsciiListPresenter(AsciiListContract.UserActionsListener asciiListPresenter) {
-        this.asciiListPresenter = asciiListPresenter;
-    }
-
-
-
-    private void calculateLimit() {
-
-        limit = AsciiGridCalculator.calculateLimit(getActivity());
-    }
-
-
-
-    public void search(String query) {
-        this.query = query;
-        this.skip = 0;
-
-        asciiListPresenter.onClickSearchAscii(getAsciiRequest(limit, skip , query, isOnlyInStock));
-    }
-
-
-
-    // VIEW
-
-    @Override
-    public void showLoading() {
-
-        flProgressBar.setVisibility(View.VISIBLE);
-        recyclerView.setVisibility(View.GONE);
-        tvMsg.setVisibility(View.GONE);
-
-    }
-
-    @Override
-    public void hideLoading() {
-
-        recyclerView.setVisibility(View.VISIBLE);
-        flProgressBar.setVisibility(View.GONE);
-    }
-
-
-
-    private void configRecyclerView( List<Ascii> asciiList)
+    private void initRecyclerView( List<Ascii> asciiList)
     {
         final AsciiListAdapter adapter = new AsciiListAdapter(getActivity(), asciiList, new AsciiListAdapter.AsciiAdapterListener() {
 
@@ -276,11 +195,76 @@ public class AsciiListFragment extends Fragment implements AsciiListContract.Vie
         }
     }
 
+    private RecyclerView.OnScrollListener onRecylerViewScrolled() {
+
+        return new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                View view = (View) recyclerView.getChildAt(recyclerView.getChildCount() - 1);
+                int diff = (view.getBottom() - (recyclerView.getHeight() + recyclerView.getScrollY()));
+
+
+                if (diff == 0) {
+
+                    skip = limit + skip;
+
+                    asciiListPresenter.onRefreshAsciiList(new AsciiRequest(limit, skip, query, isOnlyInStock));
+                }
+            }
+        };
+    }
+
+
+
+    private void calculateLimit() {
+
+        limit = AsciiGridCalculator.calculateLimit(getActivity());
+    }
+
+
+
+    public void search(String query) {
+        this.query = query;
+        this.skip = 0;
+
+        asciiListPresenter.onClickSearchAscii(new AsciiRequest(limit, skip , query, isOnlyInStock));
+    }
+
+
+
+    // VIEW
+
+    @Override
+    public void showLoading() {
+
+        flProgressBar.setVisibility(View.VISIBLE);
+        recyclerView.setVisibility(View.GONE);
+        tvMsg.setVisibility(View.GONE);
+
+    }
+
+    @Override
+    public void hideLoading() {
+
+        recyclerView.setVisibility(View.VISIBLE);
+        flProgressBar.setVisibility(View.GONE);
+    }
+
+
+
     @Override
     public void showSearchedAsciiList(final List<Ascii> asciiList) {
 
         if(recyclerView.getAdapter() == null) {
-            configRecyclerView(asciiList);
+            initRecyclerView(asciiList);
         }
         else
         {
@@ -331,14 +315,7 @@ public class AsciiListFragment extends Fragment implements AsciiListContract.Vie
 
     }
 
-    @Override
-    public void showAsciiDetailActivity(Ascii ascii) {
 
-        Intent intent = new Intent(getContext(), AsciiDetailActivity.class);
-        intent.putExtra(AppProperties.ASCII_KEY, ascii);
-        startActivity(intent);
-
-    }
 
     @Override
     public void showLoadingOnScroll() {
@@ -362,6 +339,15 @@ public class AsciiListFragment extends Fragment implements AsciiListContract.Vie
 
 
     @Override
+    public void showAsciiDetailActivity(Ascii ascii) {
+
+        Intent intent = new Intent(getContext(), AsciiDetailActivity.class);
+        intent.putExtra(AppProperties.ASCII_KEY, ascii);
+        startActivity(intent);
+
+    }
+
+    @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
@@ -377,17 +363,7 @@ public class AsciiListFragment extends Fragment implements AsciiListContract.Vie
         super.onDestroyView();
     }
 
-    private AsciiRequest getAsciiRequest(int limit, int skip, String query , boolean isOnlyInStock)
-    {
-        AsciiRequest asciiRequest = new AsciiRequest();
-        asciiRequest.setTimestamp(new Date().getTime());
-        asciiRequest.setLimit(limit);
-        asciiRequest.setSkip(skip);
-        asciiRequest.setQuery(query);
-        asciiRequest.setOnlyInStock(isOnlyInStock);
 
-        return asciiRequest;
-    }
 
 
 }

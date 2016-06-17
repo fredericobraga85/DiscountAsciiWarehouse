@@ -45,9 +45,6 @@ public class AsciiDetailFragment extends Fragment implements AsciiDetailContract
         return fragment;
     }
 
-    public AsciiDetailContract.UserActionsListener getAsciiDetailPresenter() {
-        return asciiDetailPresenter;
-    }
 
     public void setAsciiDetailPresenter(AsciiDetailContract.UserActionsListener asciiDetailPresenter) {
         this.asciiDetailPresenter = asciiDetailPresenter;
@@ -79,17 +76,6 @@ public class AsciiDetailFragment extends Fragment implements AsciiDetailContract
         return view;
     }
 
-
-    private View.OnClickListener onClickBtnBuy() {
-        return new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                asciiDetailPresenter.onClickBtnBuy();
-            }
-        };
-    }
-
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -101,12 +87,6 @@ public class AsciiDetailFragment extends Fragment implements AsciiDetailContract
         {
             showOnlyOneStockMsg();
         }
-    }
-
-    private void showOnlyOneStockMsg() {
-
-        tvOnlyOneMore.setVisibility(View.VISIBLE);
-
     }
 
 
@@ -122,25 +102,10 @@ public class AsciiDetailFragment extends Fragment implements AsciiDetailContract
         return true;
     }
 
+    private void showOnlyOneStockMsg() {
 
-    @Override
-    public void showAsciiListActivity() {
+        tvOnlyOneMore.setVisibility(View.VISIBLE);
 
-        getActivity().finish();
-
-    }
-
-    @Override
-    public void showLoading() {
-
-        flProgressBar.setVisibility(View.VISIBLE);
-
-    }
-
-    @Override
-    public void hideLoading() {
-
-        flProgressBar.setVisibility(View.GONE);
     }
 
 
@@ -152,13 +117,23 @@ public class AsciiDetailFragment extends Fragment implements AsciiDetailContract
         tvPrice.setText(ascii.convertPriceToDollarText());
     }
 
+    private View.OnClickListener onClickBtnBuy() {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                asciiDetailPresenter.onClickBtnBuy();
+            }
+        };
+    }
+
+
     @Override
     public void showConfirmBuyMsg() {
 
         DialogUtils.showDialog(getActivity(),getString(R.string.buyQuestion),null, getString(R.string.yes), buyNow(),getString(R.string.no), dontBuy() );
 
     }
-
 
 
     private DialogInterface.OnClickListener dontBuy() {
@@ -204,6 +179,11 @@ public class AsciiDetailFragment extends Fragment implements AsciiDetailContract
 
     }
 
+    @Override
+    public void showAsciiListActivity() {
+
+        getActivity().finish();
+    }
 
 
     @Override

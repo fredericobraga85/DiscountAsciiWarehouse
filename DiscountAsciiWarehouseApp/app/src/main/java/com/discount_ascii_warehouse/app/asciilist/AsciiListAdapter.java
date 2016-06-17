@@ -72,15 +72,6 @@ public class AsciiListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         return ASCII_VIEW_TYPE;
     }
 
-    private boolean isLastPosition(int position) {
-
-        if(position == asciiList.size())
-        {
-            return true;
-        }
-
-        return false;
-    }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -149,9 +140,27 @@ public class AsciiListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     }
 
 
+    public void showLoading() {
 
+        shouldShowLoading = true;
+        notifyItemChanged(this.asciiList.size());
+    }
 
+    public void removeLoading() {
 
+        shouldShowLoading = false;
+        notifyItemChanged(this.asciiList.size());
+    }
+
+    private boolean isLastPosition(int position) {
+
+        if(position == asciiList.size())
+        {
+            return true;
+        }
+
+        return false;
+    }
 
     public void swap(List<Ascii> asciiList) {
         this.asciiList.clear();
@@ -165,20 +174,6 @@ public class AsciiListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         notifyDataSetChanged();
 
     }
-
-    public void showLoading() {
-
-        shouldShowLoading = true;
-        notifyItemChanged(this.asciiList.size());
-    }
-
-    public void removeLoading() {
-
-        shouldShowLoading = false;
-        notifyItemChanged(this.asciiList.size());
-    }
-
-
 
 
 

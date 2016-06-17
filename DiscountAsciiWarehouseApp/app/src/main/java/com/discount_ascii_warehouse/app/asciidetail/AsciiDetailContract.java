@@ -9,8 +9,6 @@ public interface AsciiDetailContract {
 
     interface View
     {
-        void showLoading();
-        void hideLoading();
         void showAscii(Ascii ascii);
         void showConfirmBuyMsg();
         void showBuySuccessMsg();

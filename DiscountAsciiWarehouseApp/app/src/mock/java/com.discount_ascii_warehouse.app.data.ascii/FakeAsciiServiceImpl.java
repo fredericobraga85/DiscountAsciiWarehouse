@@ -5,6 +5,8 @@ import android.support.annotation.Nullable;
 
 import com.discount_ascii_warehouse.app.data.ascii.Ascii;
 import com.discount_ascii_warehouse.app.data.ascii.AsciiService;
+import com.discount_ascii_warehouse.app.data.asciirequest.AsciiRequest;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,10 +20,9 @@ public class FakeAsciiServiceImpl implements AsciiService {
 
 
     @Override
-    public void getAsciiList(AsciiRequest asciiRequest, @NonNull AsciiRepository.GetAsciiCallBack callBack) throws Exception {
-
-        List<Ascii> asciiList = getFakeAsciiList(skip, limit);
-        callBack.onAsciiLoaded(asciiList);
+    public void getAsciiList(AsciiRequest asciiRequest, @NonNull GetAsciiServiceCallBack callBack){
+        List<Ascii> asciiList = getFakeAsciiList(asciiRequest.getSkip() , asciiRequest.getLimit());
+        callBack.onAsciiLoaded(asciiList, getFakeResponse(asciiList));
 
     }
 
@@ -56,4 +57,16 @@ public class FakeAsciiServiceImpl implements AsciiService {
 
     }
 
+    public String getFakeResponse(List<Ascii> asciiList) {
+
+        String response = "";
+
+        for (Ascii ascii : asciiList)
+        {
+            Gson gson = new Gson();
+            response +=  gson.toJson(ascii) + "\n";
+        }
+
+        return response;
+    }
 }

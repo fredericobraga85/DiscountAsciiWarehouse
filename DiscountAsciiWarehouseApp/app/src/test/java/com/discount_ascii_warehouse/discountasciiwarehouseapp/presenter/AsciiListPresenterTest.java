@@ -180,7 +180,7 @@ public class AsciiListPresenterTest {
 
         asciiListPresenter.onClickAscii(ascii);
 
-        verify(asciiListView).showAsciiDetailActitivty(ascii);
+        verify(asciiListView).showAsciiDetailActivity(ascii);
 
     }
 
