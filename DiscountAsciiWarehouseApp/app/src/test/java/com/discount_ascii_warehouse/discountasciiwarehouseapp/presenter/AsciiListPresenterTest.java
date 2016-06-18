@@ -70,7 +70,7 @@ public class AsciiListPresenterTest {
 
        asciiListPresenter.onClickSearchAscii(asciiRequest);
 
-            verify(asciiListView).showLoading();
+            verify(asciiListView).hideLoading();
             verify(asciiRequestRepository).getCachedRequestInLastHour(asciiRequest);
             verify(asciiService).getAsciiList(Mockito.eq(asciiRequest), asciiCallBackArgumentCaptor.capture());
 
@@ -223,7 +223,7 @@ public class AsciiListPresenterTest {
                 asciiCallBackArgumentCaptor.getValue().onAsciiLoaded(asciiList, "");
 
             verify(asciiRequestRepository, times(2)).cacheRequest(asciiRequest);
-            verify(asciiListView).hideLoadingOnScroll();
+            verify(asciiListView, times(2)).hideLoadingOnScroll();
 
         asciiRequest.setQuery("should show error");
 
@@ -234,7 +234,7 @@ public class AsciiListPresenterTest {
 
                 asciiCallBackArgumentCaptor.getValue().onError("error");
 
-            verify(asciiListView, times(2)).hideLoadingOnScroll();
+            verify(asciiListView, times(3)).hideLoadingOnScroll();
             verify(asciiListView).showErrorLoadingScroll();
 
 

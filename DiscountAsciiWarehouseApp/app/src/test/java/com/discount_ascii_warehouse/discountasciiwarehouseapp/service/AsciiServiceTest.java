@@ -6,6 +6,7 @@ import com.discount_ascii_warehouse.app.data.ascii.AsciiServiceRetrofit;
 import com.discount_ascii_warehouse.app.data.asciirequest.AsciiRequest;
 
 import junit.framework.Assert;
+import junit.framework.AssertionFailedError;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -45,21 +46,23 @@ public class AsciiServiceTest {
                 @Override
                 public void onAsciiLoaded(List<Ascii> asciiList, String response) {
 
-                    Assert.assertTrue(asciiList != null);
-                    Assert.assertTrue(asciiList.size() > 0);
 
-                    for(Ascii ascii : asciiList)
-                    {
-                        Assert.assertTrue(ascii.getType() != null);
-                        Assert.assertTrue(ascii.getId() != null);
-                        Assert.assertTrue(ascii.getSize() != 0);
-                        Assert.assertTrue(ascii.getPrice() != 0);
-                        Assert.assertTrue(ascii.getFace() != null);
-                        Assert.assertTrue(ascii.getStock() >= 0);
-                        Assert.assertTrue(ascii.getTags() != null);
-                    }
+                        Assert.assertTrue(asciiList != null);
+                        Assert.assertTrue(asciiList.size() > 0);
 
-                    signal.countDown();
+                        for (Ascii ascii : asciiList) {
+                            Assert.assertTrue(ascii.getType() != null);
+                            Assert.assertTrue(ascii.getId() != null);
+                            Assert.assertTrue(ascii.getSize() != 0);
+                            Assert.assertTrue(ascii.getPrice() != 0);
+                            Assert.assertTrue(ascii.getFace() != null);
+                            Assert.assertTrue(ascii.getStock() >= 0);
+                            Assert.assertTrue(ascii.getTags() != null);
+                        }
+
+                        signal.countDown();
+
+
                 }
 
                 @Override

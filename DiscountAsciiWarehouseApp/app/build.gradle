@@ -40,6 +40,8 @@ android {
     }
 }
 
+
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
@@ -73,5 +75,6 @@ dependencies {
     testCompile "org.powermock:powermock-api-mockito:1.6.2"
 
 }
+
 
 
