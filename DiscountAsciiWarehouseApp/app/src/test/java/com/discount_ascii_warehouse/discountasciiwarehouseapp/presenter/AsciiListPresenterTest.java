@@ -70,7 +70,7 @@ public class AsciiListPresenterTest {
 
        asciiListPresenter.onClickSearchAscii(asciiRequest);
 
-            verify(asciiListView).hideLoading();
+            verify(asciiListView).showLoading();
             verify(asciiRequestRepository).getCachedRequestInLastHour(asciiRequest);
             verify(asciiService).getAsciiList(Mockito.eq(asciiRequest), asciiCallBackArgumentCaptor.capture());
 
