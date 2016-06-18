@@ -43,7 +43,7 @@ public class AsciiListFragment extends Fragment implements AsciiListContract.Vie
     TextView tvMsg;
 
 
-    private Integer limit = 0
+    private Integer limit = 0;
     private Integer skip = 0;
     private String query = "";
     private boolean isOnlyInStock = false;
