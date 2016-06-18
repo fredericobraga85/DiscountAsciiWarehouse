@@ -61,7 +61,7 @@ public class AsciiRequestRepositoryTest {
         Assert.assertTrue(asciiCachedRequest != null);
 
 
-        Assert.assertTrue(asciiCachedRequest.getLimit() == 1);
+        Assert.assertTrue(asciiCachedRequest.getLimit() == limit);
         Assert.assertTrue(asciiCachedRequest.getSkip() == skip);
         Assert.assertTrue(asciiCachedRequest.getQuery().equals(query));
         Assert.assertTrue(asciiCachedRequest.isOnlyInStock() == onlyInStock);
