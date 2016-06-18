@@ -28,6 +28,7 @@ android {
         }
         prod {
             versionName "1.0"
+            
         }
     }
 
