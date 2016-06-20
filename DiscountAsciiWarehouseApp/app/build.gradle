@@ -14,10 +14,21 @@ android {
         testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
 
     }
+
+    signingConfigs {
+        release {
+            storeFile file(System.getenv("DISCOUNT_ASCII_KEY_FILE"))
+            storePassword System.getenv("DISCOUNT_ASCII_KSTOREPWD")
+            keyAlias System.getenv("DISCOUNT_ASCII_KEY_ALIAS")
+            keyPassword System.getenv("DISCOUNT_ASCII_KEYPWD")
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
 
