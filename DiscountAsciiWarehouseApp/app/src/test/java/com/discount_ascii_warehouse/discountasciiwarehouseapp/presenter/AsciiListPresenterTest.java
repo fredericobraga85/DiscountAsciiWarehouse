@@ -25,7 +25,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.eq;
 
 /**
- * Created by mariobraga on 6/13/16.
+ * Created by fredericobraga on 6/13/16.
  */
 public class AsciiListPresenterTest {
 
