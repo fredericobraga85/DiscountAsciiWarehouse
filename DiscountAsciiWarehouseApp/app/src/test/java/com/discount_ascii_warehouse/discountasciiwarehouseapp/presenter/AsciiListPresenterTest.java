@@ -84,7 +84,7 @@ public class AsciiListPresenterTest {
         //get cached Request
         asciiListPresenter.onClickSearchAscii(asciiRequest);
 
-            verify(asciiListView,times(3)).showLoading();
+            verify(asciiListView,times(2)).showLoading();
             verify(asciiRequestRepository, times(2)).getCachedRequestInLastHour(asciiRequest);
             verify(asciiListView).hideLoading();
             verify(asciiListView).showSearchedAsciiList(Mockito.eq(asciiList));
