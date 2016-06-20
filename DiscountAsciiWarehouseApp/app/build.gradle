@@ -90,7 +90,7 @@ dependencies {
 
 def renameAPK(variant, defaultConfig, buildType) {
     variant.outputs.each { output ->
-        def formattedDate = new Date().format('yyMMdd')
+        def formattedDate = new Date().format('yyMMddHHmm')
 
         def file = output.packageApplication.outputFile
         def fileName = applicationName + "_V" + defaultConfig.versionCode + "_" + formattedDate + "_" + buildType + ".apk"
